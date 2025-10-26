@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_vallet_cars/home_pages/details_parking.dart';
 import 'package:flutter_application_vallet_cars/home_pages/location_page.dart';
 import 'package:flutter_application_vallet_cars/home_pages/orders_pages.dart';
+import 'package:flutter_application_vallet_cars/home_pages/profile_page.dart';
 
 void main() => runApp(
   const MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()),
@@ -379,7 +380,12 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       const SizedBox(width: 12),
-                      const _CircleIcon(Icons.person_2_outlined),
+                        _CircleIcon(Icons.person_2_outlined, onTap: (){Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ProfilePage(),
+                            ),
+                          );}),
                     ],
                   ),
 
@@ -600,7 +606,7 @@ class _LocationRow extends StatelessWidget {
             );
           },
           child: const Text(
-            'Jakarta, Indonesia',
+            'Jeddah, Saudi Arabia',
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,

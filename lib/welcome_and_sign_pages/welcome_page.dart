@@ -1,11 +1,12 @@
-// ignore_for_file: unused_element
+// ignore_for_file: unused_element, unused_element_parameter
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_vallet_cars/admin_dashboard/admin_login.dart';
 import 'package:flutter_application_vallet_cars/welcome_and_sign_pages/signup_page.dart';
 
 // اسم التطبيق الظاهر بجانب الأيقونة
-const String kAppName = 'ValletCar'; // غيّرها لو حابب
+//const String kAppName = 'ValletCar'; // غيّرها لو حابب
 
 void main() => runApp(
   const MaterialApp(
@@ -52,15 +53,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeOut,
       );
     } else {
-      // TODO: وجّه لصفحة الدخول/الرئيسية
-      Navigator.of(
-        context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const SignAndRejisterPage()));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const SignAndRejisterPage()),
+      );
     }
   }
 
-  void _skip() =>
-      _next(); // نفس سلوك الصورة: يتخطى بسرعة (تقدر توديه Home مباشرة)
+  void _skip() => _next();
 
   @override
   void dispose() {
@@ -108,13 +107,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
 
-          // ---- Top bar (progress + logo + Skip) ----
+          // ---- Top bar (Logo+Name left + progress + Skip) ----
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: Row(
                 children: [
-                  // Progress (3 شرائح بعرض الشاشة)
+                  // شعار + اسم التطبيق (أعلى اليسار)
+                  const _LogoTitle(),
+
+                  const SizedBox(width: 12),
+
+                  // Progress (3 شرائح) يأخذ المساحة المتبقية
                   Expanded(
                     child: Row(
                       children: List.generate(total, (i) {
@@ -137,8 +141,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       }),
                     ),
                   ),
+
                   const SizedBox(width: 12),
-                  // زر Skip كما في الصورة (حافة رمادية وشفافية خفيفة)
+
+                  // زر Skip
                   TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -168,8 +174,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-
-          // ---- شعار + اسم التطبيق (يسار أعلى) ----
 
           // ---- اللوحة السفلية: العنوان + الوصف + الزر ----
           Align(
@@ -207,7 +211,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                   const SizedBox(height: 22),
-                  // زر أزرق دائري كبير بعرض الشاشة مع سهم
                   SizedBox(
                     width: double.infinity,
                     height: 64,
@@ -243,6 +246,53 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+class _LogoTitle extends StatelessWidget {
+  const _LogoTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(28),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const AdminLoginPage()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(.8),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: Colors.black.withOpacity(.08)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            CircleAvatar(
+              radius: 14,
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.directions_car_filled_rounded,
+                color: Color(0xFF3F7CFF),
+                size: 18,
+              ),
+            ),
+            // (اختياري) لو عايز تضيف اسم التطبيق جنب الأيقونة، افك التعليق تحت
+            // SizedBox(width: 8),
+            // Text(
+            //   'ValletCar',
+            //   style: TextStyle(
+            //     color: Colors.black87,
+            //     fontWeight: FontWeight.w700,
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
